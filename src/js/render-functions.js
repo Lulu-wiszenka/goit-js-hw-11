@@ -18,32 +18,42 @@ likes — кількість вподобайок
 views — кількість переглядів
 comments — кількість коментарів
 downloads — кількість завантажень
-
 */
-export const container = document.querySelector(".gallery");
+import SimpleLightbox from "simplelightbox";
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
+export const lightbox = new SimpleLightbox('.gallery a', {
+                                        captions: true,
+                                        captionDelay: 250,
+                                        captionsData: 'alt'
+                                        });
+
+
+export const gallery = document.querySelector(".gallery");
 export const loader = document.querySelector("#loader");
 
-export function createGallery(arr, lightbox) {
-    container.innerHTML = arr.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => {
-        return
-        `<li class="gallery-item">
+export function createGallery(arr) {
+    console.log("lalala!");
+    const newGallery = arr.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => {
+        return `<li class="gallery-item">
           <a class="gallery-link-img" href="${largeImageURL}">
             <img src="${webformatURL}" alt="${tags}" class="gallery-img"/>
           </a>
           <div class="descr-container">
-            <h3 class="gallery-likes"> Likes ${likes} </h3>
-            <h3 class="gallery-views"> Views ${views} </h3>
-            <h3 class="gallery-comments"> Comments ${comments} </h3>
-            <h3 class="gallery-downloads"> Downloads ${downloads} </h3>
+            <h3 class="gallery-likes"> Likes <br/> ${likes} </h3>
+            <h3 class="gallery-views"> Views <br/> ${views} </h3>
+            <h3 class="gallery-comments"> Comments <br/> ${comments} </h3>
+            <h3 class="gallery-downloads"> Downloads <br/> ${downloads} </h3>
           </div>
         </li>`
     }).join("");
-
+    console.log(newGallery);
+    gallery.innerHTML = newGallery;
     lightbox.refresh();
 }
 
 export function clearGallery() {
-    container.innerHTML = "";
+    gallery.innerHTML = "";
 }
 
 export function showLoader() {
