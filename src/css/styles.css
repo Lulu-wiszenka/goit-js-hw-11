@@ -79,7 +79,9 @@ img {
 .hidden{
   visibility: hidden;
 }
+
 .gallery{
+  padding: 50px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

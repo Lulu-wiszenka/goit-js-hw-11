@@ -1,19 +1,11 @@
-import axios from 'axios';
-
-import SimpleLightbox from "simplelightbox";
-import 'simplelightbox/dist/simple-lightbox.min.css';
-
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
 import { getImagesByQuery } from "./js/pixabay-api";
-import { gallery, loader, lightbox, createGallery, clearGallery, showLoader, hideLoader } from "./js/render-functions";
-
-/*
-У файлі main.js напиши всю логіку роботи додатка. Виклики нотифікацій iziToast, усі перевірки на довжину масиву в отриманій відповіді робимо саме в цьому файлі. Імпортуй в нього функції із файлів pixabay-api.js та render-functions.js та викликай їх у відповідний момент.
-*/
+import { createGallery, clearGallery, showLoader, hideLoader } from "./js/render-functions";
 
 
+//gallery, loader, lightbox,
 
 
 
@@ -30,10 +22,10 @@ function handleSubmit(event) {
     }
     showLoader();
     getImagesByQuery(inputValue)
-        .then((res) => {
-            if (res.data.hits.length > 0) {
-                console.log(res.data.hits);
-                createGallery(res.data.hits);
+        .then((data) => {
+            if (data.hits.length > 0) {
+                console.log(data.hits);
+                createGallery(data.hits);
             } else {
                 iziToast.error({
                   title: 'Error',
@@ -42,7 +34,10 @@ function handleSubmit(event) {
             }
         })
         .catch(error => {
-        console.log("error message: ", error)
+                iziToast.error({
+                  title: 'Error',
+                  message: `${error.message}`,
+                });
         })
         .finally(() => {
             hideLoader();
